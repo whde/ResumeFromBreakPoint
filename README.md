@@ -72,7 +72,7 @@ internal func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, 
 /*存储数据,将offset标到文件末尾,在末尾写入数据,最后关闭文件*/
 func save(data:NSData) -> Void
 ```
-## 使用
+# 使用
 ```objective-c
     var urlStr: String?="http://dlsw.baidu.com/sw-search-sp/soft/2a/25677/QQ_V4.1.1.1456905733.dmg"
     /*开始下载
