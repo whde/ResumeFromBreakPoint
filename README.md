@@ -1,7 +1,10 @@
 # ResumeFromBreakPoint
 <p>Swift实现断点续传,Demo简单易懂,没有太多复杂模块和逻辑,完整体现断点续传的原理<p>
 <p>https://github.com/whde/BreakPoint 为对应的Objective-C版本<p>
-
+```objective-c
+/*Objective-C*/
+pod 'BreakPoint', '~> 1.0.1'
+```
 ## WhdeBreakPoint
 简单的网络请求队列管理类,简单的管理,不做太多复杂处理
 ```objective-c
