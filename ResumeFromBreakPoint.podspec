@@ -16,8 +16,8 @@ Pod::Spec.new do |s|
 #
 
 s.name         = "ResumeFromBreakPoint"
-s.version      = "0.0.1"
-s.summary      = "A short description of ResumeFromBreakPoint."
+s.version      = "0.0.2"
+s.summary      = "Swift断点续传"
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -65,7 +65,7 @@ s.author             = { "Whde" => "460290973@qq.com" }
 #
 
 # s.platform     = :ios
-s.platform     = :ios, "7.0"
+s.platform     = :ios, "8.0"
 
 #  When using multiple platforms
 # s.ios.deployment_target = "5.0"
@@ -80,7 +80,7 @@ s.platform     = :ios, "7.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/whde/ResumeFromBreakPoint.git", :tag => "0.0.1" }
+s.source       = { :git => "https://github.com/whde/ResumeFromBreakPoint.git", :tag => "0.0.2" }
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -118,7 +118,7 @@ s.source_files  = "Classes", "ResumeFromBreakPoint/Whde/*.{swift}"
 #
 
 # s.framework  = "SomeFramework"
-# s.frameworks = "SomeFramework", "AnotherFramework"
+s.frameworks = 'Foundation', 'UIKit'
 
 # s.library   = "iconv"
 # s.libraries = "iconv", "xml2"

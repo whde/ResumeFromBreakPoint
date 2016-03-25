@@ -11,6 +11,11 @@ var sessionArray:NSMutableArray = NSMutableArray.init(capacity: 50) // [struct R
 class WhdeBreakPoint: NSObject{
     /*异步下载*/
     static func asynDownload(urlStr:NSString, progress:ProgressBlock, success:SuccessBlock, failure:FailureBlock) ->WhdeSession {
+        for session in sessionArray {
+            if (((session as! WhdeSession).url?.absoluteString.isEqual(urlStr)) == true) {
+                return session as! WhdeSession;
+            }
+        }
         let session:WhdeSession = WhdeSession().asynDownload(urlStr, progress: progress, success: success, failure: failure) { (Bool) in
             /*WhdeSession取消请求,数组中将移除对应的请求*/
             for session in sessionArray {
