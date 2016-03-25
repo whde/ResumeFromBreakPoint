@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
 #
 
 s.name         = "ResumeFromBreakPoint"
-s.version      = "0.0.2"
+s.version      = "1.0.0"
 s.summary      = "Swift断点续传"
 
 # This description is used to generate tags and improve search results.
@@ -80,7 +80,7 @@ s.platform     = :ios, "8.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/whde/ResumeFromBreakPoint.git", :tag => "0.0.2" }
+s.source       = { :git => "https://github.com/whde/ResumeFromBreakPoint.git", :tag => "1.0.0" }
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
