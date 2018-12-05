@@ -1,16 +1,18 @@
 # ResumeFromBreakPoint
 <p>Swift实现断点续传,Demo简单易懂,没有太多复杂模块和逻辑,完整体现断点续传的原理<p>
 <p>https://github.com/whde/BreakPoint 为对应的Objective-C版本<p>
+
 ```objective-c
 /*Objective-C*/
 pod 'BreakPoint', '~> 1.0.1'
 ```
+
 ## WhdeBreakPoint
 简单的网络请求队列管理类,简单的管理,不做太多复杂处理
 ```objective-c
 /*创建请求,添加请求到数组中
 WhdeSession请求失败,取消请求等需要从数组中移除*/
-static func asynDownload(urlStr:NSString, progress:ProgressBlock, success:SuccessBlock, failure:FailureBlock) ->WhdeSession
+static func asynDownload(urlStr:NSString, progress:@escaping ProgressBlock, success:@escaping SuccessBlock, failure:@escaping FailureBlock) ->WhdeSession
 ```
 ```objective-c
 /*取消请求,移除数组中对应的请求*/
@@ -40,7 +42,7 @@ static func deleteFile(url:NSURL) ->Bool
 网络收发
 ```objective-c
 /*创建请求,开始下载,设置已经下载的位置*/
-func asynDownload(urlStr:NSString, progress:ProgressBlock, success:SuccessBlock, failure:FailureBlock, callCancel:CallCancel) ->WhdeSession 
+func asynDownload(urlStr:NSString, progress:@escaping ProgressBlock, success:@escaping SuccessBlock, failure:@escaping FailureBlock, callCancel:@escaping CallCancel) ->WhdeSession
 ```
 ```objective-c
 /*取消下载*/
@@ -52,26 +54,27 @@ func pause() -> Void
 ```
 ```objective-c
 /*出现错误,取消请求,通知失败*/
-internal func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?)
+internal func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?)
 ```
 ```objective-c
 /*下载完成*/
-internal func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?)
+internal func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?)
 ```
 ```objective-c
 /*接收到数据,将数据存储*/
-internal func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-let response:NSHTTPURLResponse = dataTask.response as! NSHTTPURLResponse
-if response.statusCode == 200 {
-/*无断点续传时候,一直走200*/
-self.progressBlock!(progress:(Float.init(dataTask.countOfBytesReceived)/Float.init(dataTask.countOfBytesExpectedToReceive)), receiveByte: dataTask.countOfBytesReceived, allByte: dataTask.countOfBytesExpectedToReceive)
-self.save(data)
-} else if response.statusCode == 206 {
-/*断点续传后,一直走206*/
-self.progressBlock!(progress:((Float.init(dataTask.countOfBytesReceived+Int64.init(startFileSize))/Float.init(dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize)))), receiveByte: dataTask.countOfBytesReceived, allByte: dataTask.countOfBytesExpectedToReceive);
-self.save(data)
+internal func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+    let response:HTTPURLResponse = dataTask.response as! HTTPURLResponse
+    if response.statusCode == 200 {
+        /*无断点续传时候,一直走200*/
+        self.progressBlock!((Float.init(dataTask.countOfBytesReceived+Int64.init(startFileSize))/Float.init(dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize))), dataTask.countOfBytesReceived+Int64.init(startFileSize), dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize))
+        self.save(data: data as NSData)
+    } else if response.statusCode == 206 {
+        /*断点续传后,一直走206*/
+        self.progressBlock!(((Float.init(dataTask.countOfBytesReceived+Int64.init(startFileSize))/Float.init(dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize)))), dataTask.countOfBytesReceived+Int64.init(startFileSize), dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize));
+        self.save(data: data as NSData)
+    }
 }
-}
+
 ```
 ```objective-c
 /*存储数据,将offset标到文件末尾,在末尾写入数据,最后关闭文件*/
@@ -79,27 +82,27 @@ func save(data:NSData) -> Void
 ```
 # 使用
 ```objective-c
-var urlStr: String?="http://dlsw.baidu.com/sw-search-sp/soft/2a/25677/QQ_V4.1.1.1456905733.dmg"
+var urlStr: String?="https://central.github.com/deployments/desktop/desktop/latest/darwin"
 /*开始下载
-继续下载*/
+ 继续下载*/
 @IBAction func start(sender: AnyObject) {
-
-WhdeBreakPoint.asynDownload(urlStr!, progress: { (progress, receiveByte, allByte) in
-self.progressView.progress = progress
-self.progressLabel.text = "\(Int.init(progress*100))%"
-}, success: { (filePath) in
-print("success:"+(filePath as String))
-}) { (filePath) in
-print("success:"+(filePath as String))
-}
+    
+    WhdeBreakPoint.asynDownload(urlStr: urlStr! as NSString, progress: { (progress, receiveByte, allByte) in
+        self.progressView.progress = progress
+        self.progressLabel.text = "\(Int.init(progress*100))%"
+    }, success: { (filePath) in
+        print("success:"+(filePath as String))
+    }) { (filePath) in
+        print("success:"+(filePath as String))
+    }
 }
 
 /*根据Url暂停*/
 @IBAction func pause(sender: AnyObject) {
-WhdeBreakPoint.pause(urlStr!)
+    WhdeBreakPoint.pause(urlStr: urlStr!)
 }
 /*根据Url去删除文件*/
 @IBAction func deleteFile(sender: AnyObject) {
-WhdeFileManager.deleteFile(NSURL.init(string: urlStr!)!)
+    WhdeFileManager.deleteFile(url: NSURL.init(string: urlStr!)!)
 }
 ```

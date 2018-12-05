@@ -1,8 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,41 +18,61 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9PB-eW-yun">
-                                <rect key="frame" x="87" y="202" width="30" height="30"/>
-                                <state key="normal" title="开始"/>
-                                <connections>
-                                    <action selector="start:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KtK-Ew-Kfp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EW8-kf-T9f">
-                                <rect key="frame" x="87" y="240" width="30" height="30"/>
-                                <state key="normal" title="暂停"/>
-                                <connections>
-                                    <action selector="pause:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dz4-Xb-Lpu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5p-Lx-c0V">
-                                <rect key="frame" x="87" y="278" width="30" height="30"/>
-                                <state key="normal" title="删除"/>
-                                <connections>
-                                    <action selector="deleteFile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ict-Os-hPx"/>
-                                </connections>
-                            </button>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H9B-i1-Z9e">
-                                <rect key="frame" x="57" y="192" width="150" height="2"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H9B-i1-Z9e">
+                                <rect key="frame" x="57" y="192" width="262" height="2"/>
                             </progressView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-qh-4gb">
-                                <rect key="frame" x="57" y="168" width="143" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qbj-qh-4gb">
+                                <rect key="frame" x="43" y="168" width="24.5" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24.5" id="Jgm-fI-lvQ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9PB-eW-yun">
+                                <rect key="frame" x="163" y="221" width="31" height="30"/>
+                                <state key="normal" title="开始"/>
+                                <connections>
+                                    <action selector="startWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mAh-OB-S8i"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EW8-kf-T9f">
+                                <rect key="frame" x="163" y="259" width="31" height="30"/>
+                                <state key="normal" title="暂停"/>
+                                <connections>
+                                    <action selector="pauseWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="elu-j3-1sI"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5p-Lx-c0V">
+                                <rect key="frame" x="163" y="297" width="31" height="30"/>
+                                <state key="normal" title="删除"/>
+                                <connections>
+                                    <action selector="deleteFileWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f0d-c4-N5y"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="H9B-i1-Z9e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="57" id="3Ne-O9-eUr"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="EW8-kf-T9f" secondAttribute="trailing" constant="20" symbolic="YES" id="BcB-ad-SEo"/>
+                            <constraint firstItem="C5p-Lx-c0V" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="163" id="EnR-va-4oY"/>
+                            <constraint firstItem="qbj-qh-4gb" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="148" id="JvN-wl-iXs"/>
+                            <constraint firstAttribute="trailing" secondItem="H9B-i1-Z9e" secondAttribute="trailing" constant="56" id="Xee-0b-KE0"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qbj-qh-4gb" secondAttribute="trailing" constant="20" symbolic="YES" id="aHr-Z8-omg"/>
+                            <constraint firstItem="9PB-eW-yun" firstAttribute="top" secondItem="H9B-i1-Z9e" secondAttribute="bottom" constant="27" id="atM-7M-S1r"/>
+                            <constraint firstItem="EW8-kf-T9f" firstAttribute="top" secondItem="9PB-eW-yun" secondAttribute="bottom" constant="8" id="bgU-tx-aJM"/>
+                            <constraint firstItem="C5p-Lx-c0V" firstAttribute="top" secondItem="EW8-kf-T9f" secondAttribute="bottom" constant="8" id="f7v-kk-msa"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="9PB-eW-yun" secondAttribute="trailing" constant="20" symbolic="YES" id="tPA-G5-Bqt"/>
+                            <constraint firstItem="qbj-qh-4gb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="43" id="uL7-TQ-kXc"/>
+                            <constraint firstItem="9PB-eW-yun" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="163" id="uVq-Rp-TfN"/>
+                            <constraint firstItem="H9B-i1-Z9e" firstAttribute="top" secondItem="qbj-qh-4gb" secondAttribute="bottom" constant="3" id="v14-jf-FAG"/>
+                            <constraint firstItem="EW8-kf-T9f" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="163" id="vp8-qf-di1"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="C5p-Lx-c0V" secondAttribute="trailing" constant="20" symbolic="YES" id="zjW-JO-2AY"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="progressLabel" destination="qbj-qh-4gb" id="e7s-Au-hft"/>
@@ -57,7 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="337"/>
+            <point key="canvasLocation" x="373.60000000000002" y="336.88155922038982"/>
         </scene>
     </scenes>
 </document>

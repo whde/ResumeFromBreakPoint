@@ -10,23 +10,23 @@ import Foundation
 var sessionArray:NSMutableArray = NSMutableArray.init(capacity: 50) // [struct Request,struct Request]
 class WhdeBreakPoint: NSObject{
     /*异步下载*/
-    static func asynDownload(urlStr:NSString, progress:ProgressBlock, success:SuccessBlock, failure:FailureBlock) ->WhdeSession {
+    static func asynDownload(urlStr:NSString, progress:@escaping ProgressBlock, success:@escaping SuccessBlock, failure:@escaping FailureBlock) ->WhdeSession {
         for session in sessionArray {
-            if (((session as! WhdeSession).url?.absoluteString.isEqual(urlStr)) == true) {
+            if (((session as! WhdeSession).url?.absoluteString?.isEqual(urlStr)) == true) {
                 return session as! WhdeSession;
             }
         }
-        let session:WhdeSession = WhdeSession().asynDownload(urlStr, progress: progress, success: success, failure: failure) { (Bool) in
+        let session:WhdeSession = WhdeSession().asynDownload(urlStr: urlStr, progress: progress, success: success, failure: failure) { (Bool) in
             /*WhdeSession取消请求,数组中将移除对应的请求*/
             for session in sessionArray {
-                if (((session as! WhdeSession).url?.absoluteString.isEqual(urlStr)) == true) {
-                    sessionArray.removeObject(session)
+                if (((session as! WhdeSession).url?.absoluteString!.isEqual(urlStr)) == true) {
+                    sessionArray.remove(session)
                     break;
                 }
             }
         }
         /*添加到数组*/
-        sessionArray.addObject(session);
+        sessionArray.add(session);
         return session
     }
     
@@ -34,7 +34,7 @@ class WhdeBreakPoint: NSObject{
     static func cancel(urlStr:String) {
         /*查找数组中对应的请求*/
         for session in sessionArray {
-            if (((session as! WhdeSession).url?.absoluteString.isEqual(urlStr)) == true) {
+            if (((session as! WhdeSession).url?.absoluteString?.isEqual(urlStr)) == true) {
                 (session as! WhdeSession).cancel()
                 break;
             }
@@ -44,7 +44,7 @@ class WhdeBreakPoint: NSObject{
     static func pause(urlStr:String) {
         /*查找数组中对应的请求*/
         for session in sessionArray {
-            if (((session as! WhdeSession).url?.absoluteString.isEqual(urlStr)) == true) {
+            if (((session as! WhdeSession).url?.absoluteString?.isEqual(urlStr)) == true) {
                 (session as! WhdeSession).pause()
                 break;
             }

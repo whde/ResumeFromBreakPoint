@@ -7,33 +7,33 @@
 //
 
 import Foundation
-typealias ProgressBlock=(progress:Float, receiveByte:Int64, allByte:Int64)->Void
-typealias SuccessBlock=(filePath:NSString)->Void
-typealias FailureBlock=(filePath:NSString)->Void
+typealias ProgressBlock=(_ progress:Float, _ receiveByte:Int64, _ allByte:Int64)->Void
+typealias SuccessBlock=(_ filePath:NSString)->Void
+typealias FailureBlock=(_ filePath:NSString)->Void
 typealias CallCancel = (Bool)->Void
-class WhdeSession: NSObject, NSURLSessionDataDelegate {
+class WhdeSession: NSObject, URLSessionDataDelegate {
     var progressBlock:ProgressBlock? = nil
     var successBlock:SuccessBlock? = nil
     var failureBlock:FailureBlock? = nil
     var callCancel:CallCancel? = nil
     var url:NSURL? = nil
     var path:String? = nil
-    var task:NSURLSessionDataTask? = nil
+    var task:URLSessionDataTask? = nil
     var startFileSize:UInt64 = 0;
     /*异步下载*/
-    func asynDownload(urlStr:NSString, progress:ProgressBlock, success:SuccessBlock, failure:FailureBlock, callCancel:CallCancel) ->WhdeSession {
+    func asynDownload(urlStr:NSString, progress:@escaping ProgressBlock, success:@escaping SuccessBlock, failure:@escaping FailureBlock, callCancel:@escaping CallCancel) ->WhdeSession {
         let url:NSURL = NSURL.init(string: urlStr as String)!
-        let path:String = WhdeFileManager.filePath(url)
-        let urlRequest:NSMutableURLRequest = NSMutableURLRequest.init(URL: url)
-        startFileSize = WhdeFileManager.fileSize(url);
+        let path:String = WhdeFileManager.filePath(url: url)
+        let urlRequest:NSMutableURLRequest = NSMutableURLRequest.init(url: url as URL)
+        startFileSize = WhdeFileManager.fileSize(url: url);
         if startFileSize > 0 {
             /*添加本地文件大小到header,告诉服务器我们下载到哪里了*/
             let requestRange:String = String.init(format: "bytes=%llu-", startFileSize)
             urlRequest.addValue(requestRange, forHTTPHeaderField: "Range")
         }
-        let config:NSURLSessionConfiguration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let session:NSURLSession = NSURLSession.init(configuration: config, delegate: self, delegateQueue: NSOperationQueue.currentQueue())
-        let task:NSURLSessionDataTask = session.dataTaskWithRequest(urlRequest)
+        let config:URLSessionConfiguration = URLSessionConfiguration.default
+        let session:URLSession = URLSession.init(configuration: config, delegate: self, delegateQueue: OperationQueue.current)
+        let task:URLSessionDataTask = session.dataTask(with: urlRequest as URLRequest)
         self.progressBlock = progress
         self.successBlock = success
         self.failureBlock = failure
@@ -55,34 +55,34 @@ class WhdeSession: NSObject, NSURLSessionDataDelegate {
         self.callCancel!(true)
     }
     /*出现错误,取消请求,通知失败*/
-    internal func URLSession(session: NSURLSession, didBecomeInvalidWithError error: NSError?) {
+    internal func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
         self.callCancel!(true)
-        self.failureBlock!(filePath: self.path!)
+        self.failureBlock!(self.path! as NSString)
     }
     /*下载完成*/
-    internal func URLSession(session: NSURLSession, task: NSURLSessionTask, didCompleteWithError error: NSError?) {
+    internal func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         self.callCancel!(true)
-        self.successBlock!(filePath: self.path!)
+        self.successBlock!(self.path! as NSString)
     }
     /*接收到数据,将数据存储*/
-    internal func URLSession(session: NSURLSession, dataTask: NSURLSessionDataTask, didReceiveData data: NSData) {
-        let response:NSHTTPURLResponse = dataTask.response as! NSHTTPURLResponse
+    internal func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        let response:HTTPURLResponse = dataTask.response as! HTTPURLResponse
         if response.statusCode == 200 {
             /*无断点续传时候,一直走200*/
-            self.progressBlock!(progress:(Float.init(dataTask.countOfBytesReceived)/Float.init(dataTask.countOfBytesExpectedToReceive)), receiveByte: dataTask.countOfBytesReceived, allByte: dataTask.countOfBytesExpectedToReceive)
-            self.save(data)
+            self.progressBlock!((Float.init(dataTask.countOfBytesReceived+Int64.init(startFileSize))/Float.init(dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize))), dataTask.countOfBytesReceived+Int64.init(startFileSize), dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize))
+            self.save(data: data as NSData)
         } else if response.statusCode == 206 {
             /*断点续传后,一直走206*/
-            self.progressBlock!(progress:((Float.init(dataTask.countOfBytesReceived+Int64.init(startFileSize))/Float.init(dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize)))), receiveByte: dataTask.countOfBytesReceived, allByte: dataTask.countOfBytesExpectedToReceive);
-            self.save(data)
+            self.progressBlock!(((Float.init(dataTask.countOfBytesReceived+Int64.init(startFileSize))/Float.init(dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize)))), dataTask.countOfBytesReceived+Int64.init(startFileSize), dataTask.countOfBytesExpectedToReceive+Int64.init(startFileSize));
+            self.save(data: data as NSData)
         }
     }
     /*存储数据,将offset标到文件末尾,在末尾写入数据,最后关闭文件*/
     func save(data:NSData) -> Void {
         do {
-            let fileHandle:NSFileHandle! = try NSFileHandle.init(forUpdatingURL: NSURL.fileURLWithPath(self.path!))
+            let fileHandle:FileHandle! = try FileHandle.init(forUpdating: NSURL.fileURL(withPath: self.path!))
             fileHandle?.seekToEndOfFile()
-            fileHandle?.writeData(data)
+            fileHandle?.write(data as Data)
             fileHandle?.closeFile()
         }
         catch let error as NSError {
