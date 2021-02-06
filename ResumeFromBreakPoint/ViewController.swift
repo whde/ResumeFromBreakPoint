@@ -54,14 +54,3 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
 }
-@IBAction func start(sender: AnyObject) {
-    let session = WhdeBreakPoint.asynDownload(urlStr: urlStr, progress: { progress, _, _ in
-        self.progressView.progress = progress
-        self.progressLabel.text = "\(Int(progress * 100))%"
-    }, success: { filePath in
-        print("success: \(filePath)")
-    }) { filePath in
-        print("success: \(filePath)")
-    }
-    print(session)
-}
