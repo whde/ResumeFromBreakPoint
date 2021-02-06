@@ -7,53 +7,53 @@
 //
 
 import Foundation
-var sessionArray:NSMutableArray = NSMutableArray.init(capacity: 50) // [struct Request,struct Request]
-class WhdeBreakPoint: NSObject{
-    /*异步下载*/
-    static func asynDownload(urlStr:NSString, progress:@escaping ProgressBlock, success:@escaping SuccessBlock, failure:@escaping FailureBlock) ->WhdeSession {
-        for session in sessionArray {
-            if (((session as! WhdeSession).url?.absoluteString?.isEqual(urlStr)) == true) {
-                return session as! WhdeSession;
-            }
+var sessionArray: [WhdeSession] = []
+class WhdeBreakPoint {
+    /* 异步下载 */
+    static func asynDownload(urlStr: String, progress: @escaping ProgressBlock, success: @escaping SuccessBlock, failure: @escaping FailureBlock) -> WhdeSession {
+        if let session = sessionArray.first(where: { $0.url.absoluteString == urlStr }) {
+            return session
         }
-        let session:WhdeSession = WhdeSession().asynDownload(urlStr: urlStr, progress: progress, success: success, failure: failure) { (Bool) in
-            /*WhdeSession取消请求,数组中将移除对应的请求*/
-            for session in sessionArray {
-                if (((session as! WhdeSession).url?.absoluteString!.isEqual(urlStr)) == true) {
-                    sessionArray.remove(session)
-                    break;
-                }
-            }
+        let session = WhdeSession.asynDownload(urlStr: urlStr,
+                                               progress: progress,
+                                               success: success,
+                                               failure: failure) { _ in
+            /* WhdeSession取消请求,数组中将移除对应的请求 */
+            sessionArray.removeAll { $0.url.absoluteString == urlStr }
         }
-        /*添加到数组*/
-        sessionArray.add(session);
+        /* 添加到数组 */
+        sessionArray.append(session)
         return session
     }
-    
-    /*取消*/
-    static func cancel(urlStr:String) {
-        /*查找数组中对应的请求*/
-        for session in sessionArray {
-            if (((session as! WhdeSession).url?.absoluteString?.isEqual(urlStr)) == true) {
-                (session as! WhdeSession).cancel()
-                break;
-            }
-        }
+
+    /* 取消 */
+    static func cancel(urlStr: String) {
+        /* 查找数组中对应的请求 */
+        let session = sessionArray.first { $0.url.absoluteString == urlStr }
+        session?.cancel()
+        /*
+          for session in sessionArray {
+              if (session.url.absoluteString.isEqual(urlStr)) == true {
+                  session.cancel()
+                  break
+              }
+          }
+         */
     }
-    /*暂停*/
-    static func pause(urlStr:String) {
-        /*查找数组中对应的请求*/
-        for session in sessionArray {
-            if (((session as! WhdeSession).url?.absoluteString?.isEqual(urlStr)) == true) {
-                (session as! WhdeSession).pause()
-                break;
-            }
-        }
+
+    /* 暂停 */
+    static func pause(urlStr: String) {
+        /* 查找数组中对应的请求 */
+        let session = sessionArray.first { $0.url.absoluteString == urlStr }
+        session?.pause()
+
+        /*
+          for session in sessionArray {
+              if (session.url.absoluteString.isEqual(urlStr)) == true {
+                  session.pause()
+                  break
+              }
+          }
+         */
     }
 }
-
-
-
-
-
-

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F80663F225CE69460021E73F /* String+MD5.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80663F125CE69460021E73F /* String+MD5.swift */; };
 		F8473FD51CA24173006D8FC1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8473FD41CA24173006D8FC1 /* AppDelegate.swift */; };
 		F8473FD71CA24173006D8FC1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8473FD61CA24173006D8FC1 /* ViewController.swift */; };
 		F8473FDA1CA24173006D8FC1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F8473FD81CA24173006D8FC1 /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F80663F125CE69460021E73F /* String+MD5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+MD5.swift"; sourceTree = "<group>"; };
 		F8473FD11CA24173006D8FC1 /* ResumeFromBreakPoint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ResumeFromBreakPoint.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8473FD41CA24173006D8FC1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F8473FD61CA24173006D8FC1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				F855AEF31CA3EDD800E7F703 /* WhdeBreakPoint.swift */,
 				F855AEF41CA3EDD800E7F703 /* WhdeFileManager.swift */,
 				F855AEF51CA3EDD800E7F703 /* WhdeSession.swift */,
+				F80663F125CE69460021E73F /* String+MD5.swift */,
 			);
 			path = Whde;
 			sourceTree = "<group>";
@@ -108,7 +111,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 1030;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = whde;
 				TargetAttributes = {
 					F8473FD01CA24173006D8FC1 = {
@@ -156,6 +159,7 @@
 				F8473FD71CA24173006D8FC1 /* ViewController.swift in Sources */,
 				F855AEF61CA3EDD800E7F703 /* WhdeBreakPoint.swift in Sources */,
 				F855AEF81CA3EDD800E7F703 /* WhdeSession.swift in Sources */,
+				F80663F225CE69460021E73F /* String+MD5.swift in Sources */,
 				F8473FD51CA24173006D8FC1 /* AppDelegate.swift in Sources */,
 				F855AEF71CA3EDD800E7F703 /* WhdeFileManager.swift in Sources */,
 			);
@@ -207,6 +211,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -231,11 +236,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -264,6 +270,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -282,10 +289,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -297,7 +305,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LP6RFHXTZE;
 				INFOPLIST_FILE = ResumeFromBreakPoint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -314,7 +322,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = LP6RFHXTZE;
 				INFOPLIST_FILE = ResumeFromBreakPoint/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
